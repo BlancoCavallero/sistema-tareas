@@ -2,7 +2,7 @@
 
 > A general-purpose development workflow for software projects using Git and GitHub.
 
-**Version:** 1.1  
+**Version:** 1.2  
 **Status:** Draft  
 **Scope:** General-purpose  
 **Last Updated:** 2026-09-06
@@ -65,7 +65,7 @@ Completed changes are integrated into `develop` before being promoted to `main`.
 
 ## 2.5. Production changes happen through controlled promotion
 
-Changes should normally follow:
+Normal changes should follow:
 
 ```text
 working branch
@@ -80,7 +80,7 @@ working branch
  production
 ```
 
-A change should not normally move directly from a working branch to `main`.
+A working branch should not normally be merged directly into `main`.
 
 ---
 
@@ -202,35 +202,90 @@ working branches
  └── hotfix/*
 ```
 
+The standard branch model is:
+
+| Branch | Purpose | Stability |
+|---|---|---|
+| `main` | Production | Production-ready |
+| `develop` | Integration | Development / pre-production |
+| `feature/*` | New functionality | Temporary |
+| `fix/*` | Normal bug fix | Temporary |
+| `refactor/*` | Refactoring | Temporary |
+| `docs/*` | Documentation | Temporary |
+| `test/*` | Testing changes | Temporary |
+| `chore/*` | Maintenance | Temporary |
+| `hotfix/*` | Critical production fix | Temporary |
+
 ---
 
 # 5. Main Branch
 
 The `main` branch represents the **production state** of the project.
 
-## 5.1. Rules
+## 5.1. Main Protection Rules
 
-### 🔴 MUST
+The following rules are mandatory.
 
-- `main` must remain production-ready.
-- Direct development on `main` is prohibited.
-- Changes must enter `main` through a Pull Request.
-- Required automated checks must pass before merging.
-- Required reviews must be completed.
-- Force pushes should be disabled.
-- The branch should be protected.
+### 🔴 PR Required
 
-### 🔴 MUST NOT
+All normal changes entering `main` must go through a Pull Request.
 
-A working branch should not normally be merged directly into `main`.
+### 🔴 CI Required
 
-The standard promotion path is:
+All mandatory CI checks must pass before a Pull Request can be merged.
+
+### 🔴 Review Required
+
+The Pull Request must receive the required human approval before merging.
+
+### 🔴 Direct Push Disabled
+
+Developers must not push directly to `main`.
+
+### 🔴 Force Push Disabled
+
+Force pushes to `main` are prohibited.
+
+### 🔴 Production Promotion Required
+
+Normal production changes must be promoted from `develop` to `main`.
+
+Direct promotion from normal working branches to `main` is prohibited.
+
+The standard flow is:
 
 ```text
-develop → main
+working branch
+      │
+      ▼
+   develop
+      │
+      │ Release PR
+      ▼
+     main
 ```
 
-## 5.2. Production Principle
+## 5.2. Hotfix Exception
+
+Critical production problems may use the `hotfix/*` workflow.
+
+A hotfix is the only normal exception to the `develop → main` promotion rule.
+
+```text
+main
+ │
+ └── hotfix/*
+       │
+       ├──────────► main
+       │
+       └──────────► develop
+```
+
+The hotfix must satisfy the production validation and review requirements.
+
+After being merged into `main`, the fix must also be incorporated into `develop`.
+
+## 5.3. Production Principle
 
 > If a commit exists on `main`, it should be considered eligible for production.
 
@@ -252,6 +307,7 @@ It is the destination for completed changes that have passed the project's devel
 - Changes should enter `develop` through Pull Requests.
 - Automated checks required for integration must pass.
 - Working branches should be focused on a specific logical change.
+- Direct pushes should be disabled.
 
 ### 🟡 SHOULD
 
@@ -294,6 +350,7 @@ refactor/87-api-client
 docs/52-installation-guide
 test/104-payment-validation
 chore/78-update-dependencies
+hotfix/301-payment-failure
 ```
 
 When an Issue exists, including its identifier is recommended.
@@ -304,7 +361,7 @@ When an Issue exists, including its identifier is recommended.
 
 - A working branch must represent a specific logical change.
 - A working branch should not contain unrelated work.
-- Changes should be integrated into `develop`.
+- Normal working branches must target `develop`.
 - Merged branches should be deleted when no longer needed.
 
 ### 🟡 SHOULD
@@ -335,7 +392,7 @@ The hotfix follows a special flow:
                   main
                    │
                    ▼
-              hotfix/*
+               hotfix/*
                 │   │
                 │   │
                 ▼   ▼
@@ -348,11 +405,13 @@ The hotfix follows a special flow:
 
 A hotfix merged into `main` must also be incorporated into `develop`.
 
-This prevents the production fix from being lost in future releases.
-
 ### 🔴 MUST
 
 The hotfix must pass the same production validation required for changes entering `main`.
+
+### 🔴 MUST
+
+The Pull Request must clearly identify that it is a hotfix.
 
 ### 🟡 SHOULD
 
@@ -366,45 +425,44 @@ The hotfix should be associated with an Issue describing:
 
 ---
 
-# 9. Branch Flow
+# 9. Branch Promotion Rules
 
-The standard branch flow is:
+The following promotion rules are mandatory.
 
-```text
-                    ┌──────────────┐
-                    │     main     │
-                    │  Production  │
-                    └──────▲───────┘
-                           │
-                      Release PR
-                           │
-                    ┌──────┴───────┐
-                    │    develop   │
-                    │  Integration │
-                    └──────▲───────┘
-                           │
-                ┌──────────┼──────────┐
-                │          │          │
-                ▼          ▼          ▼
-            feature/*    fix/*    refactor/*
-```
-
-The normal flow is:
+## 9.1. Normal Changes
 
 ```text
-feature/fix/refactor
-          │
-          ▼
-       develop
-          │
-          ▼
-      Release PR
-          │
-          ▼
-        main
+feature/* ──┐
+fix/* ──────┤
+refactor/* ─┤
+docs/* ─────┤──► develop ──► main
+test/* ─────┤
+chore/* ────┘
 ```
 
-The exception is an emergency production fix:
+### 🔴 MUST
+
+Normal working branches must not be merged directly into `main`.
+
+---
+
+## 9.2. Production Promotion
+
+```text
+develop
+   │
+   │ Release PR
+   ▼
+ main
+```
+
+### 🔴 MUST
+
+Normal production promotion must originate from `develop`.
+
+---
+
+## 9.3. Hotfix
 
 ```text
 hotfix/*
@@ -413,6 +471,10 @@ hotfix/*
    │
    └────────► develop
 ```
+
+### 🔴 MUST
+
+A hotfix must be propagated to both protected branches.
 
 ---
 
@@ -510,10 +572,6 @@ Projects should use Conventional Commits when practical.
 ### 🔴 MUST
 
 Regardless of the convention used, commit messages must be meaningful and descriptive.
-
-Reference:
-
-https://www.conventionalcommits.org/
 
 ---
 
@@ -670,34 +728,6 @@ Validation
 Additional Notes
 ```
 
-Example:
-
-```text
-## Description
-
-Adds authentication support to the API.
-
-## Related Issue
-
-Closes #123
-
-## Changes
-
-- Added authentication service.
-- Added token validation.
-- Added protected API routes.
-
-## Validation
-
-- Unit tests
-- Integration tests
-- Static analysis
-
-## Additional Notes
-
-No database changes required.
-```
-
 ## 17.2. Pull Request Flow
 
 ### Working branch → `develop`
@@ -729,6 +759,10 @@ Release PR
    ▼
  main
 ```
+
+### `hotfix/*` → `main` and `develop`
+
+Used only for critical production fixes.
 
 ---
 
@@ -812,8 +846,6 @@ Every project must define its mandatory automated checks.
 ### 🔴 MUST
 
 Mandatory checks must prevent integration when they fail.
-
-GitHub Actions can implement these checks, while branch protection can require successful status checks before merging.
 
 ---
 
@@ -956,12 +988,6 @@ Decision
 Consequences
 ```
 
-This workflow may use the Architecture Decision Record approach.
-
-Reference:
-
-https://adr.github.io/
-
 ---
 
 # 23. Traceability
@@ -1047,32 +1073,54 @@ Projects may automate versioning and changelog generation.
 
 ---
 
-# 25. Protected Branches
+# 25. Protected Branch Configuration
 
-The default recommended configuration is:
+The minimum recommended protection for the two protected branches is:
 
 ## `main`
 
 ```text
-Pull Request required       🔴
-Required status checks      🔴
-Review required             🔴
-Direct push disabled        🔴
-Force push disabled         🔴
+┌────────────────────────────────────┐
+│          MAIN — PRODUCTION         │
+├────────────────────────────────────┤
+│ PR required                 🔴     │
+│ CI required                 🔴     │
+│ Review required             🔴     │
+│ Direct push disabled        🔴     │
+│ Force push disabled         🔴     │
+│ Normal promotion from       🔴     │
+│ develop only                       │
+└────────────────────────────────────┘
+```
+
+Normal flow:
+
+```text
+develop ──────► Release PR ──────► main
+```
+
+Exception:
+
+```text
+hotfix/* ─────► main
+     │
+     └─────────► develop
 ```
 
 ## `develop`
 
 ```text
-Pull Request required       🔴
-Required status checks      🔴
-Direct push disabled        🔴
-Force push disabled         🔴
+┌────────────────────────────────────┐
+│         DEVELOP — INTEGRATION      │
+├────────────────────────────────────┤
+│ PR required                 🔴     │
+│ CI required                 🔴     │
+│ Direct push disabled        🔴     │
+│ Force push disabled         🔴     │
+└────────────────────────────────────┘
 ```
 
 The exact number of required reviewers may vary according to the project.
-
-GitHub branch protection and repository rules can enforce these requirements.
 
 ---
 
@@ -1095,6 +1143,7 @@ A recommended GitHub configuration is:
 │
 ├── workflows/
 │   ├── ci.yml
+│   ├── branch-policy.yml
 │   ├── security.yml
 │   ├── ai-review.yml
 │   └── release.yml
@@ -1126,6 +1175,9 @@ Automation should be divided according to responsibility.
 ├── ci.yml
 │     └── Build / Test / Quality
 │
+├── branch-policy.yml
+│     └── Branch flow validation
+│
 ├── security.yml
 │     └── Security validation
 │
@@ -1136,7 +1188,7 @@ Automation should be divided according to responsibility.
       └── Release automation
 ```
 
-When the same workflow is used by multiple repositories, reusable GitHub Actions workflows may be preferred.
+When the same workflow is used by multiple repositories, reusable workflows may be preferred.
 
 This avoids duplicating logic across projects.
 
@@ -1185,6 +1237,10 @@ Exceptions should be:
 - Approved by the appropriate maintainer.
 
 An exception should not silently become the new standard.
+
+The `hotfix/*` workflow is a predefined exception to the normal `develop → main` promotion rule.
+
+If another exception is required, it should be documented.
 
 If the same exception occurs repeatedly, the workflow should be reconsidered.
 
@@ -1235,7 +1291,7 @@ The following policies define the core workflow.
 | WF-002 | `main` is protected | MUST | Maintainer | Yes | Yes |
 | WF-003 | Direct development on `main` is prohibited | MUST | Developer | Yes | Yes |
 | WF-004 | `develop` is the integration branch | MUST | Maintainer | Partial | Yes |
-| WF-005 | Changes normally flow through `working → develop → main` | MUST | Developer/Maintainer | Partial | Yes |
+| WF-005 | Normal changes flow through `working → develop → main` | MUST | Developer/Maintainer | Partial | Yes |
 | WF-006 | Working branches represent a logical change | MUST | Developer | Partial | Configurable |
 | WF-007 | Significant changes have an Issue or equivalent context | MUST | Developer | Partial | Configurable |
 | WF-008 | Commits must be meaningful | MUST | Developer | Yes | Configurable |
@@ -1245,7 +1301,7 @@ The following policies define the core workflow.
 | WF-012 | Protected branches require Pull Requests | MUST | GitHub | Yes | Yes |
 | WF-013 | Pull Requests must provide change context | MUST | Developer | Partial | Configurable |
 | WF-014 | Required code review must be completed | MUST | Reviewer | Yes | Yes |
-| WF-015 | Production promotion occurs through `develop → main` | MUST | Maintainer | Partial | Yes |
+| WF-015 | Normal production promotion occurs through `develop → main` | MUST | Maintainer | Partial | Yes |
 | WF-016 | Hotfixes merged into `main` must be incorporated into `develop` | MUST | Maintainer | Partial | Yes |
 | WF-017 | AI cannot be the sole approval authority | MUST | Maintainer | Partial | Yes |
 | WF-018 | AI-generated code follows the same validation process | MUST | Developer/CI | Yes | Yes |
@@ -1253,6 +1309,7 @@ The following policies define the core workflow.
 | WF-020 | Project-specific quality gates must be documented | MUST | Maintainer | Partial | Yes |
 | WF-021 | Significant exceptions must be documented | MUST | Maintainer | No | No |
 | WF-022 | The workflow should be continuously improved | SHOULD | Project Team | No | No |
+| WF-023 | `main` accepts normal production promotions only from `develop` | MUST | GitHub/CI | Yes | Yes |
 
 ---
 
@@ -1324,16 +1381,23 @@ Production Problem
 │  2. develop represents integration.          │
 │  3. Do not develop directly on protected      │
 │     branches.                                │
-│  4. Changes normally flow through             │
+│  4. Normal changes flow through               │
 │     working → develop → main.                │
-│  5. Every meaningful change has a purpose.   │
-│  6. Keep changes focused.                    │
-│  7. Validate before integrating.             │
-│  8. Review before merging.                   │
-│  9. AI assists; humans remain responsible.   │
-│ 10. Document important decisions.             │
-│ 11. Automate repetitive validation.           │
-│ 12. Improve the workflow continuously.        │
+│  5. main requires a Pull Request.            │
+│  6. main requires passing CI.                │
+│  7. main requires human review.              │
+│  8. Direct and force pushes to main are      │
+│     prohibited.                              │
+│  9. Normal promotion to main comes from      │
+│     develop.                                 │
+│ 10. Hotfixes must return to develop.         │
+│ 11. Every meaningful change has a purpose.   │
+│ 12. Keep changes focused.                    │
+│ 13. Validate before integrating.             │
+│ 14. AI assists; humans remain responsible.   │
+│ 15. Document important decisions.             │
+│ 16. Automate repetitive validation.           │
+│ 17. Improve the workflow continuously.        │
 └───────────────────────────────────────────────┘
 ```
 
@@ -1343,45 +1407,28 @@ Production Problem
 
 ## GitHub
 
-- GitHub Pull Requests  
-  https://docs.github.com/en/pull-requests
-
-- GitHub Actions  
-  https://docs.github.com/en/actions
-
-- Protected Branches  
-  https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches
-
-- Issue and Pull Request Templates  
-  https://docs.github.com/en/communities/using-templates-to-encourage-useful-issues-and-pull-requests
-
-- Reusable Workflows  
-  https://docs.github.com/en/actions/concepts/workflows-and-actions/reusing-workflow-configurations
-
-- CODEOWNERS  
-  https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+- GitHub Pull Requests
+- GitHub Actions
+- Protected Branches
+- Status Checks
+- Issue and Pull Request Templates
+- Reusable Workflows
+- CODEOWNERS
 
 ## Standards and Practices
 
-- Conventional Commits  
-  https://www.conventionalcommits.org/
-
-- Architecture Decision Records  
-  https://adr.github.io/
+- Conventional Commits
+- Architecture Decision Records
 
 ## Reference Projects
 
-- Gentleman.Dots  
-  https://github.com/Gentleman-Programming/Gentleman.Dots
+- Gentleman.Dots
+- Gentleman-Skills
+- gentleman-guardian-angel
+- gentle-ai
+- engram
+```
 
-- Gentleman-Skills  
-  https://github.com/Gentleman-Programming/Gentleman-Skills
+Esta versión deja `main` mucho más claro: **producción, protegido y sólo recibe promociones normales desde `develop`**. La única excepción explícita es `hotfix/*`, que además debe volver a `develop`.
 
-- gentleman-guardian-angel  
-  https://github.com/Gentleman-Programming/gentleman-guardian-angel
-
-- gentle-ai  
-  https://github.com/Gentleman-Programming/gentle-ai
-
-- engram  
-  https://github.com/Gentleman-Programming/engram
+El próximo paso ya puede ser **`CODEOWNERS` + la configuración concreta de Branch Protection para `main` y `develop`**. Ahí vamos a transformar estas reglas en configuración real de GitHub.
