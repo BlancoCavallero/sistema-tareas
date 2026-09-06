@@ -1,6 +1,6 @@
 ---
 name: Feature
-about: Proponer o implementar una nueva funcionalidad
+about: Propose or implement a new functionality
 title: "[FEATURE] "
 labels: ["feature"]
 assignees: []
@@ -10,24 +10,24 @@ assignees: []
 
 ## Description
 
-Describe claramente la funcionalidad que se necesita implementar.
+Clearly describe the functionality that needs to be implemented.
 
 <!--
-Explica qué se quiere incorporar y cuál es el objetivo de la funcionalidad.
-Evita definir la implementación técnica si todavía no fue decidida.
+Explain what should be added and the goal of the functionality.
+Avoid defining the technical implementation if it has not been decided yet.
 -->
 
 ## Motivation
 
-¿Por qué es necesaria esta funcionalidad?
+Why is this functionality necessary?
 
-Describe el problema, necesidad o oportunidad que justifica el cambio.
+Describe the problem, need or opportunity that justifies the change.
 
 ## Expected Result
 
-¿Qué debería ocurrir una vez implementada la funcionalidad?
+What should happen once the functionality is implemented?
 
-Describe el comportamiento esperado desde el punto de vista del usuario, sistema o componente afectado.
+Describe the expected behavior from the point of view of the user, system or affected component.
 
 ## Scope
 
@@ -45,7 +45,7 @@ Describe el comportamiento esperado desde el punto de vista del usuario, sistema
 
 ## Acceptance Criteria
 
-La funcionalidad se considera completa cuando:
+The functionality is considered complete when:
 
 - [ ] 
 - [ ] 
@@ -54,8 +54,8 @@ La funcionalidad se considera completa cuando:
 ## Technical Considerations
 
 <!--
-Opcional. Agrega restricciones, dependencias, tecnologías o decisiones
-técnicas relevantes si ya fueron identificadas.
+Optional. Add constraints, dependencies, technologies or relevant
+technical decisions if they have already been identified.
 -->
 
 - 
@@ -64,8 +64,8 @@ técnicas relevantes si ya fueron identificadas.
 ## Dependencies
 
 <!--
-Issues, servicios, módulos, componentes o tareas que deben existir
-o completarse antes de implementar esta funcionalidad.
+Issues, services, modules, components or tasks that must exist
+or be completed before implementing this functionality.
 -->
 
 - 
@@ -73,30 +73,30 @@ o completarse antes de implementar esta funcionalidad.
 ## Risks
 
 <!--
-Identifica posibles riesgos técnicos, funcionales o de integración.
+Identify possible technical, functional or integration risks.
 -->
 
 - 
 
 ## Documentation
 
-¿Es necesario actualizar documentación?
+Is it necessary to update documentation?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si la respuesta es sí, indicar cuál:
+If the answer is yes, indicate which:
 
 - 
 
 ## Additional Context
 
-Agrega cualquier información adicional, referencia o contexto relevante.
+Add any additional information, reference or relevant context.
 
 ## Related Issues
 
 <!--
-Ejemplo:
+Example:
 #123
 -->
 

@@ -2,7 +2,7 @@
 
 > A general-purpose development workflow for software projects using Git and GitHub.
 
-**Version:** 1.2  
+**Version:** 1.3  
 **Status:** Draft  
 **Scope:** General-purpose  
 **Last Updated:** 2026-09-06
@@ -1120,13 +1120,18 @@ hotfix/* ─────► main
 └────────────────────────────────────┘
 ```
 
-The exact number of required reviewers may vary according to the project.
+The recommended number of required reviewers is:
+
+- `main`: **2 approvals**
+- `develop`: **1 approval**
+
+Projects may change these values according to their risk level and team size. Self-merge by the author is discouraged on both protected branches.
 
 ---
 
 # 26. Repository Structure
 
-A recommended GitHub configuration is:
+The structure shipped by this template is:
 
 ```text
 .github/
@@ -1143,12 +1148,16 @@ A recommended GitHub configuration is:
 │
 ├── workflows/
 │   ├── ci.yml
-│   ├── branch-policy.yml
-│   ├── security.yml
-│   ├── ai-review.yml
-│   └── release.yml
+│   └── branch-policy.yml
 │
 └── CODEOWNERS
+
+scripts/
+│
+└── ci.sh
+
+.gitignore
+README.md
 ```
 
 Documentation may be organized as:
@@ -1161,31 +1170,30 @@ docs/
 └── guides/
 ```
 
-This structure is recommended, not mandatory.
+Optional automation (`security.yml`, `ai-review.yml`, `release.yml`) is not part of the core template. Projects may add it as an extension — see §28.
 
 ---
 
 # 27. Automation Architecture
 
-Automation should be divided according to responsibility.
+The core automation is divided according to responsibility:
 
 ```text
 .github/workflows/
 │
 ├── ci.yml
-│     └── Build / Test / Quality
+│     └── Build / Test / Quality (delegates to scripts/ci.sh)
 │
-├── branch-policy.yml
-│     └── Branch flow validation
-│
-├── security.yml
-│     └── Security validation
-│
-├── ai-review.yml
-│     └── AI-assisted review
-│
-└── release.yml
-      └── Release automation
+└── branch-policy.yml
+      └── Branch flow validation
+```
+
+The following workflows are **optional project extensions**, not part of the core template:
+
+```text
+security.yml     ── Security validation
+ai-review.yml    ── AI-assisted review
+release.yml      ── Release automation
 ```
 
 When the same workflow is used by multiple repositories, reusable workflows may be preferred.
@@ -1428,7 +1436,3 @@ Production Problem
 - gentle-ai
 - engram
 ```
-
-Esta versión deja `main` mucho más claro: **producción, protegido y sólo recibe promociones normales desde `develop`**. La única excepción explícita es `hotfix/*`, que además debe volver a `develop`.
-
-El próximo paso ya puede ser **`CODEOWNERS` + la configuración concreta de Branch Protection para `main` y `develop`**. Ahí vamos a transformar estas reglas en configuración real de GitHub.

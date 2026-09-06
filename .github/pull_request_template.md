@@ -2,17 +2,17 @@
 
 ## Description
 
-Describe brevemente qué cambia este Pull Request y cuál es su objetivo.
+Briefly describe what this Pull Request changes and its objective.
 
 <!--
-Explica el cambio desde el punto de vista funcional o técnico.
-Evita simplemente repetir el título del PR.
+Explain the change from a functional or technical point of view.
+Avoid simply repeating the PR title.
 -->
 
 ## Related Issue
 
 <!--
-Ejemplo:
+Example:
 Closes #123
 Related to #456
 -->
@@ -39,7 +39,7 @@ Select all that apply:
 
 ## Changes
 
-Describe los cambios principales realizados.
+Describe the main changes made.
 
 - 
 - 
@@ -58,14 +58,14 @@ Describe los cambios principales realizados.
 - 
 
 <!--
-Utiliza esta sección cuando el alcance del cambio pueda generar dudas.
+Use this section when the scope of the change may raise doubts.
 -->
 
 ---
 
 ## Validation
 
-Describe cómo se verificó el cambio.
+Describe how the change was verified.
 
 ### Automated Tests
 
@@ -90,11 +90,11 @@ Describe cómo se verificó el cambio.
 - [ ] Performed
 - [ ] Not required
 
-Describe las validaciones realizadas:
+Describe the validations performed:
 
 ```text
-Especificar comandos ejecutados, escenarios probados,
-resultados relevantes, etc.
+Specify executed commands, tested scenarios,
+relevant results, etc.
 ```
 
 ---
@@ -114,14 +114,14 @@ resultados relevantes, etc.
 
 ## Architecture / Design
 
-¿Este cambio afecta la arquitectura, diseño o decisiones técnicas del proyecto?
+Does this change affect the project's architecture, design or technical decisions?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si la respuesta es sí, describir:
+If the answer is yes, describe:
 
-- Componentes afectados:
+- Affected components:
 - Interfaces affected:
 - Data model affected:
 - Architecture decisions affected:
@@ -138,12 +138,12 @@ ADR reference:
 
 ## Security
 
-¿El cambio afecta aspectos relacionados con seguridad?
+Does the change affect security-related aspects?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si la respuesta es sí, describir brevemente:
+If the answer is yes, describe briefly:
 
 - Authentication:
 - Authorization:
@@ -156,12 +156,12 @@ Si la respuesta es sí, describir brevemente:
 
 ## Database / Data Changes
 
-¿El cambio afecta datos, esquemas o migraciones?
+Does the change affect data, schemas or migrations?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si la respuesta es sí:
+If the answer is yes:
 
 - [ ] Migration included
 - [ ] Migration tested
@@ -174,18 +174,18 @@ Details:
 
 ## Breaking Changes
 
-¿El cambio rompe compatibilidad existente?
+Does the change break existing compatibility?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si la respuesta es sí, describir qué cambia y qué consumidores podrían verse afectados.
+If the answer is yes, describe what changes and which consumers could be affected.
 
 ---
 
 ## Documentation
 
-¿La documentación fue actualizada cuando correspondía?
+Was the documentation updated when appropriate?
 
 - [ ] No documentation changes required
 - [ ] Documentation updated
@@ -199,12 +199,12 @@ Documentation affected:
 
 ## AI Assistance
 
-¿Se utilizó IA durante el desarrollo de este cambio?
+Was AI used during the development of this change?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si se utilizó IA, indicar brevemente para qué:
+If AI was used, briefly indicate for what:
 
 - [ ] Planning
 - [ ] Code generation
@@ -223,8 +223,8 @@ Si se utilizó IA, indicar brevemente para qué:
 - [ ] Generated information was verified when relevant
 
 <!--
-La utilización de IA no reemplaza la revisión humana ni las validaciones
-definidas por el proyecto.
+The use of AI does not replace human review or the validations
+defined by the project.
 -->
 
 ---
@@ -232,8 +232,8 @@ definidas por el proyecto.
 ## Reviewer Notes
 
 <!--
-Opcional. Utiliza esta sección para señalar específicamente
-aspectos que deberían recibir especial atención durante el review.
+Optional. Use this section to specifically point out
+aspects that should receive special attention during the review.
 -->
 
 Please pay particular attention to:
@@ -245,7 +245,7 @@ Please pay particular attention to:
 
 ## Additional Context
 
-Agrega cualquier información adicional relevante para el review.
+Add any additional information relevant to the review.
 
 ---
 

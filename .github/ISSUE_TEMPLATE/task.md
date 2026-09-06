@@ -1,6 +1,6 @@
 ---
 name: Task
-about: Registrar una tarea técnica o de mantenimiento
+about: Record a technical or maintenance task
 title: "[TASK] "
 labels: ["task"]
 assignees: []
@@ -10,21 +10,21 @@ assignees: []
 
 ## Description
 
-Describe la tarea que debe realizarse.
+Describe the task that must be performed.
 
 <!--
-Una Task debería representar un trabajo concreto y acotado.
+A Task should represent concrete and bounded work.
 -->
 
 ## Objective
 
-¿Cuál es el objetivo de esta tarea?
+What is the objective of this task?
 
 ## Context
 
-¿Por qué es necesaria?
+Why is it necessary?
 
-Describe brevemente el contexto que originó la tarea.
+Briefly describe the context that originated the task.
 
 ## Scope
 
@@ -41,11 +41,11 @@ Describe brevemente el contexto que originó la tarea.
 
 ## Expected Result
 
-¿Qué debería quedar resuelto o disponible al finalizar la tarea?
+What should be resolved or available when the task is finished?
 
 ## Acceptance Criteria
 
-La tarea se considera completa cuando:
+The task is considered complete when:
 
 - [ ] 
 - [ ] 
@@ -54,7 +54,7 @@ La tarea se considera completa cuando:
 ## Technical Considerations
 
 <!--
-Detalles técnicos conocidos o restricciones que deban considerarse.
+Known technical details or constraints that should be considered.
 -->
 
 - 
@@ -62,18 +62,18 @@ Detalles técnicos conocidos o restricciones que deban considerarse.
 
 ## Dependencies
 
-¿Existe alguna dependencia?
+Is there any dependency?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si existe, indicar:
+If so, indicate it:
 
 - 
 
 ## Validation
 
-¿Cómo se verificará que la tarea fue realizada correctamente?
+How will it be verified that the task was performed correctly?
 
 - [ ] Tests
 - [ ] Build
@@ -82,22 +82,22 @@ Si existe, indicar:
 - [ ] Integration Validation
 - [ ] Other
 
-Detalles:
+Details:
 
 ## Documentation
 
-¿Es necesario actualizar documentación?
+Is it necessary to update documentation?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si la respuesta es sí:
+If the answer is yes:
 
 - 
 
 ## Additional Context
 
-Agrega cualquier información adicional relevante.
+Add any additional relevant information.
 
 ## Related Issues
 

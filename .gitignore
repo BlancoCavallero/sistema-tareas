@@ -1,0 +1,15 @@
+# Local tooling artifacts (never versioned)
+.atl/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.idea/
+.vscode/
+*.swp
+
+# Logs and temp
+*.log
+*.tmp
