@@ -1,0 +1,6 @@
+# GitHub code owners — define required reviewers per path.
+# Replace the placeholders with the real team before enabling branch protection.
+# Docs: https://docs.github.com/repositories/managing-access-to-your-repositories/managing-review-requests-for-a-pull-request/about-code-owners
+#
+# * @your-org/your-team
+# .github/ @your-org/platform-team
