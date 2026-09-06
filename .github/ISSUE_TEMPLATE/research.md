@@ -1,6 +1,6 @@
 ---
 name: Research
-about: Investigar una alternativa, tecnología, problema o decisión técnica
+about: Investigate an alternative, technology, problem or technical decision
 title: "[RESEARCH] "
 labels: ["research"]
 assignees: []
@@ -10,22 +10,22 @@ assignees: []
 
 ## Research Question
 
-¿Qué pregunta se busca responder?
+What question is this research trying to answer?
 
 <!--
-La pregunta debería ser concreta y permitir determinar cuándo
-la investigación puede considerarse finalizada.
+The question should be concrete and make it possible to determine when
+the research can be considered finished.
 -->
 
 ## Context
 
-Describe el contexto que origina la investigación.
+Describe the context that originated the research.
 
-¿Por qué necesitamos investigar este tema?
+Why do we need to research this topic?
 
 ## Objective
 
-¿Cuál es el objetivo de la investigación?
+What is the objective of the research?
 
 ## Scope
 
@@ -42,78 +42,78 @@ Describe el contexto que origina la investigación.
 
 ## Alternatives / Options
 
-¿Qué alternativas deberían analizarse?
+What alternatives should be analyzed?
 
 - 
 - 
 - 
 
 <!--
-No es necesario conocer todas las alternativas al crear la Issue.
+It is not necessary to know all the alternatives when creating the Issue.
 -->
 
 ## Evaluation Criteria
 
-¿Cómo se compararán las alternativas?
+How will the alternatives be compared?
 
-- [ ] Complejidad
-- [ ] Mantenibilidad
-- [ ] Rendimiento
-- [ ] Seguridad
-- [ ] Costo
-- [ ] Escalabilidad
-- [ ] Compatibilidad
-- [ ] Facilidad de implementación
-- [ ] Disponibilidad de herramientas
-- [ ] Documentación
-- [ ] Otro
+- [ ] Complexity
+- [ ] Maintainability
+- [ ] Performance
+- [ ] Security
+- [ ] Cost
+- [ ] Scalability
+- [ ] Compatibility
+- [ ] Ease of implementation
+- [ ] Tool availability
+- [ ] Documentation
+- [ ] Other
 
-Agregar otros criterios:
+Add other criteria:
 
 - 
 
 ## Evidence
 
-¿Qué información debería obtenerse?
+What information should be obtained?
 
-Ejemplos:
+Examples:
 
-- Documentación oficial.
-- Pruebas de concepto.
+- Official documentation.
+- Proofs of concept.
 - Benchmarks.
-- Experimentos.
-- Comparaciones.
-- Referencias técnicas.
-- Experiencia del equipo.
+- Experiments.
+- Comparisons.
+- Technical references.
+- Team experience.
 
 ## Expected Deliverable
 
-¿Qué debería producir la investigación?
+What should the research produce?
 
-- [ ] Documento técnico
+- [ ] Technical document
 - [ ] Architecture Decision Record (ADR)
 - [ ] Proof of Concept (PoC)
 - [ ] Benchmark
-- [ ] Recomendación
-- [ ] Otro
+- [ ] Recommendation
+- [ ] Other
 
-Descripción:
+Description:
 
 ## Acceptance Criteria
 
-La investigación se considera completa cuando:
+The research is considered complete when:
 
-- [ ] La pregunta inicial fue respondida.
-- [ ] Las alternativas relevantes fueron analizadas.
-- [ ] Los criterios de evaluación fueron considerados.
-- [ ] La evidencia relevante fue documentada.
-- [ ] Se presentó una conclusión o recomendación.
-- [ ] Las decisiones importantes fueron documentadas.
+- [ ] The initial question was answered.
+- [ ] The relevant alternatives were analyzed.
+- [ ] The evaluation criteria were considered.
+- [ ] The relevant evidence was documented.
+- [ ] A conclusion or recommendation was presented.
+- [ ] The important decisions were documented.
 
 ## Conclusion
 
 <!--
-Completar al finalizar la investigación.
+Complete when the research is finished.
 -->
 
 ### Findings
@@ -130,30 +130,30 @@ Completar al finalizar la investigación.
 
 ## Decision Required
 
-¿La investigación requiere tomar una decisión?
+Does the research require making a decision?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Si requiere decisión, indicar cuál:
+If a decision is required, indicate which:
 
 ## Follow-up Work
 
-¿La investigación genera tareas posteriores?
+Does the research generate subsequent tasks?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
-Issues relacionadas:
+Related issues:
 
 - 
 
 ## References
 
-Agregar documentación, artículos, repositorios, papers u otras fuentes relevantes.
+Add documentation, articles, repositories, papers or other relevant sources.
 
 - 
 
 ## Additional Context
 
-Agrega cualquier información adicional.
+Add any additional information.

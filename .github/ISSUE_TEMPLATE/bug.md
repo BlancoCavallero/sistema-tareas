@@ -1,6 +1,6 @@
 ---
 name: Bug
-about: Reportar un comportamiento incorrecto o inesperado
+about: Report incorrect or unexpected behavior
 title: "[BUG] "
 labels: ["bug"]
 assignees: []
@@ -10,27 +10,27 @@ assignees: []
 
 ## Description
 
-Describe el problema de forma clara y concisa.
+Describe the problem clearly and concisely.
 
 ## Current Behavior
 
-¿Qué está ocurriendo actualmente?
+What is currently happening?
 
 <!--
-Describe el comportamiento observado.
+Describe the observed behavior.
 -->
 
 ## Expected Behavior
 
-¿Qué debería ocurrir?
+What should happen?
 
 <!--
-Describe el comportamiento correcto esperado.
+Describe the correct expected behavior.
 -->
 
 ## Steps to Reproduce
 
-Pasos necesarios para reproducir el problema:
+Steps needed to reproduce the problem:
 
 1. 
 2. 
@@ -39,7 +39,7 @@ Pasos necesarios para reproducir el problema:
 
 ## Environment
 
-Completa la información relevante para reproducir el problema.
+Fill in the relevant information to reproduce the problem.
 
 - **Operating System:** 
 - **Version:** 
@@ -49,72 +49,72 @@ Completa la información relevante para reproducir el problema.
 - **Other:** 
 
 <!--
-Elimina los campos que no sean relevantes para el proyecto.
+Remove the fields that are not relevant to the project.
 -->
 
 ## Logs / Error Messages
 
 ```text
-Pega aquí los logs o mensajes de error relevantes.
+Paste the relevant logs or error messages here.
 ```
 
 <!--
-No incluyas contraseñas, tokens, API keys, credenciales ni información sensible.
+Do not include passwords, tokens, API keys, credentials or sensitive information.
 -->
 
 ## Evidence
 
 <!--
-Capturas, videos, requests/responses u otra evidencia útil.
+Screenshots, videos, requests/responses or other useful evidence.
 -->
 
 ## Impact
 
-¿Cuál es el impacto del problema?
+What is the impact of the problem?
 
-- [ ] Bajo
-- [ ] Medio
-- [ ] Alto
-- [ ] Crítico
+- [ ] Low
+- [ ] Medium
+- [ ] High
+- [ ] Critical
 
-Describe el impacto:
+Describe the impact:
 
 ## Frequency
 
-¿Con qué frecuencia ocurre?
+How often does it occur?
 
-- [ ] Siempre
-- [ ] Frecuentemente
-- [ ] Ocasionalmente
-- [ ] Una sola vez
-- [ ] Desconocido
+- [ ] Always
+- [ ] Frequently
+- [ ] Occasionally
+- [ ] Once
+- [ ] Unknown
 
 ## Possible Cause
 
 <!--
-Si conocés o sospechás la causa, describila.
-No es necesario conocer la causa para reportar el bug.
+If you know or suspect the cause, describe it.
+It is not necessary to know the cause to report the bug.
 -->
 
 ## Acceptance Criteria
 
-El bug se considera resuelto cuando:
+The bug is considered resolved when:
 
-- [ ] El comportamiento incorrecto fue corregido.
-- [ ] El comportamiento esperado fue validado.
-- [ ] Se agregaron o actualizaron tests cuando corresponde.
-- [ ] No se introdujeron regresiones conocidas.
+- [ ] The incorrect behavior was fixed.
+- [ ] The expected behavior was validated.
+- [ ] Tests were added or updated where appropriate.
+- [ ] No known regressions were introduced.
 
 ## Documentation
 
-¿Es necesario actualizar documentación?
+Is it necessary to update documentation?
 
 - [ ] No
-- [ ] Sí
+- [ ] Yes
 
 ## Additional Context
 
-Agrega cualquier información adicional que pueda ayudar a investigar o resolver el problema.
+Add any additional information that may help investigate or resolve the problem.
 
 ## Related Issues
 
