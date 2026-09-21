@@ -1138,7 +1138,7 @@ Settings → Branches → Add rule
 ├── Require a pull request before merging   ✅
 │   └── Required approvals: 1 (or 0 with CI-only)
 ├── Require status checks                   ✅
-│   └── CI, Branch Policy
+│   └── CI, Validate branch policy
 ├── Do not allow force pushes               ✅
 └── Do not allow deletions                  ✅
 ```
