@@ -1,0 +1,19 @@
+# Package Managers
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+bun.lock
+bun.lockb
+
+# Miscellaneous
+/static/
+worker-configuration.d.ts
+
+# Template workflow docs (hand-formatted, not app code)
+.github/ISSUE_TEMPLATE/
+.github/pull_request_template.md
+.github/WORKFLOW.md
+
+# Local tooling and SDD artifacts (never versioned)
+AGENTS.md
+openspec/

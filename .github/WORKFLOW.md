@@ -1127,6 +1127,29 @@ The recommended number of required reviewers is:
 
 Projects may change these values according to their risk level and team size. Self-merge by the author is discouraged on both protected branches.
 
+### Project settings — SistemaTareas
+
+This project uses **1 approval or CI-only** on both protected branches (solo development; CI still gates every merge).
+
+Configured rule (GitHub UI, cannot be versioned), applied to both `main` and `develop`:
+
+```text
+Settings → Branches → Add rule
+├── Require a pull request before merging   ✅
+│   └── Required approvals: 1 (or 0 with CI-only)
+├── Require status checks                   ✅
+│   └── CI, Branch Policy
+├── Do not allow force pushes               ✅
+└── Do not allow deletions                  ✅
+```
+
+One-time setup steps:
+
+1. Create the public repository and re-point `origin` (exact commands in `README.md`).
+2. Protect `main` and `develop` with the rule above.
+3. Create the Cloudflare Pages project `sistema-tareas` and an API token with `Pages:Edit`; store `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in GitHub Actions secrets.
+4. Merges to `main` deploy automatically via `.github/workflows/deploy.yml`.
+
 ---
 
 # 26. Repository Structure

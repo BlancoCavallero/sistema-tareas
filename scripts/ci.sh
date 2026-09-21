@@ -1,24 +1,20 @@
 #!/usr/bin/env bash
-# Generic CI entry point for the project template.
+# CI entry point: dependency install, lint, test, build — fail on first error.
 #
-# Replace the run_checks() function below with your project's mandatory
-# checks (build, tests, lint, static analysis, security...).
-#
-# It fails by default on purpose: a silently green CI is worse than a
-# failing one that tells you what to configure. Do NOT delete the failure
-# path without defining real checks.
+# Guard: refuse to run while `origin` still points at the template repository
+# (BlancoCavallero/Estructura.git). Pushing to that repo by accident would be
+# the failure mode this guard exists to prevent.
 set -euo pipefail
 
-# --- Project checks ---------------------------------------------------------
-# Uncomment and adapt to your stack. Examples:
-#   Node:    npm ci && npm run build && npm test && npm run lint
-#   Python:  python -m pip install -e . && pytest
-#   .NET:    dotnet build --nologo && dotnet test --nologo
-#   Go:      go build ./... && go test ./...
-run_checks() {
-  echo "::error::scripts/ci.sh is not configured. Edit it to run the project's mandatory checks (see WORKFLOW.md, sections 15-16)."
-  exit 1
-}
-# ----------------------------------------------------------------------------
+TPL="https://github.com/BlancoCavallero/Estructura.git"
+ORIGIN_URL="$(git remote get-url origin 2>/dev/null || true)"
 
-run_checks
+if [ -z "$ORIGIN_URL" ] || [ "$ORIGIN_URL" = "$TPL" ]; then
+	echo "::error::origin still points at template"
+	exit 1
+fi
+
+npm ci
+npm run lint
+npm run test
+npm run build
