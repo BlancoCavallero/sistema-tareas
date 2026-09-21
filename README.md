@@ -39,7 +39,7 @@ Never push before `origin` is re-pointed: `scripts/ci.sh` fails with `origin sti
 For both `main` and `develop`: Settings → Branches → Add branch protection rule:
 
 - Require a pull request before merging (1 approval, or 0 approvals with required status checks for a CI-only solo workflow).
-- Require status checks: `CI`, `Branch Policy`.
+- Require status checks: `CI`, `Validate branch policy`.
 - Do not allow force pushes; do not allow deletions.
 
 ### 3. Cloudflare Pages project and API token
