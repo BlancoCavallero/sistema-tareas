@@ -1,7 +1,8 @@
-import { error, fail } from '@sveltejs/kit';
+import { fail } from '@sveltejs/kit';
 import type { Actions } from '@sveltejs/kit';
 import type { PageServerLoad } from './$types';
 import { today, type RecurrenceMode, type RecurrenceType } from '$lib/domain/recurrence';
+import { db } from '$lib/server/db';
 import {
 	completeTask,
 	createTask,
@@ -10,8 +11,7 @@ import {
 	listTasks,
 	materializeStale,
 	uncompleteTask,
-	updateTask,
-	type D1TaskStore
+	updateTask
 } from '$lib/server/tasks/repository';
 
 /**
@@ -23,19 +23,10 @@ import {
  *
  * Actions: create / edit / delete / complete / uncomplete, all driven from the
  * components with `use:enhance`.
+ *
+ * The D1 binding is resolved by the shared `db()` helper from `$lib/server/db`
+ * (structural `D1Store`, which the tasks repository's `D1TaskStore` satisfies).
  */
-
-/**
- * Resolve the D1 binding structurally (D1Database is not a resolvable global in
- * the app tsconfig; the repository store type is its structural subset).
- */
-function db(event: { platform?: App.Platform | null }): D1TaskStore {
-	const database = event.platform?.env?.DB;
-	if (!database) {
-		throw error(500, 'Base de datos no disponible.');
-	}
-	return database;
-}
 
 function taskId(form: FormData): number | null {
 	const raw = form.get('id');
