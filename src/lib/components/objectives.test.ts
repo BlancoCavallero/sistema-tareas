@@ -225,3 +225,56 @@ describe('ObjectiveGrid', () => {
 		expect(document.querySelectorAll('.month-grid .chip').length).toBe(0);
 	});
 });
+
+describe('ObjectiveGrid (compact)', () => {
+	// Compact mode (design D5) is the dashboard mini-calendar variant: same
+	// cells/semantics, tighter styling, kind label hidden, and each chip
+	// carries a visually-hidden status so meaning never depends on color
+	// alone (design D9).
+	const month = [
+		objective({ id: 1, title: 'Parcial de álgebra', due_date: '2026-09-25' }),
+		objective({ id: 2, title: 'Entrega TP', kind: 'deadline', due_date: '2026-09-21' }),
+		objective({ id: 3, title: 'Trámite', kind: 'other', due_date: '2026-09-10', done: true })
+	];
+
+	it('adds the compact class to the grid when compact is true', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09', compact: true }
+		});
+		expect(document.querySelector('.month-grid.compact')).toBeTruthy();
+	});
+
+	it('does not add the compact class by default', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09' }
+		});
+		expect(document.querySelector('.month-grid.compact')).toBeNull();
+	});
+
+	it('keeps the same display semantics: <time datetime> and aria-current on today', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09', compact: true }
+		});
+		expect(document.querySelectorAll('.month-grid time.day-number').length).toBe(30);
+		expect(document.querySelectorAll('[aria-current="date"]').length).toBe(1);
+		expect(document.querySelector('[role="grid"]')).toBeNull();
+	});
+
+	it('hides the kind label and carries a visually-hidden status per compact chip', () => {
+		render(ObjectiveGrid, {
+			props: { month, today: '2026-09-22', monthKey: '2026-09', compact: true }
+		});
+		// Chips render in day order (10 → 21 → 25), so statuses follow that.
+		const statuses = Array.from(document.querySelectorAll('.chip .sr-only')).map(
+			(el) => el.textContent
+		);
+		expect(statuses).toEqual(['Completada', 'Vencida', 'Próxima']);
+	});
+
+	it('adds no visually-hidden status to the full (non-compact) grid', () => {
+		render(ObjectiveGrid, {
+			props: { month, today: '2026-09-22', monthKey: '2026-09' }
+		});
+		expect(document.querySelectorAll('.chip .sr-only').length).toBe(0);
+	});
+});
