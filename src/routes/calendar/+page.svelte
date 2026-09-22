@@ -1,7 +1,8 @@
 <script lang="ts">
 	import ObjectiveForm from '$lib/components/ObjectiveForm.svelte';
+	import ObjectiveList from '$lib/components/ObjectiveList.svelte';
 
-	let { form } = $props();
+	let { data, form } = $props();
 </script>
 
 <svelte:head>
@@ -12,12 +13,4 @@
 
 <ObjectiveForm {form} />
 
-<p class="placeholder">
-	Las listas de objetivos y la grilla del mes llegarán en una próxima versión.
-</p>
-
-<style>
-	.placeholder {
-		color: var(--color-text-secondary);
-	}
-</style>
+<ObjectiveList list={data.list} today={data.today} />
