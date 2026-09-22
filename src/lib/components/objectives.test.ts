@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { fireEvent, render, screen, within } from '@testing-library/svelte';
 import ObjectiveForm from './ObjectiveForm.svelte';
+import ObjectiveGrid from './ObjectiveGrid.svelte';
 import ObjectiveItem from './ObjectiveItem.svelte';
 import ObjectiveList from './ObjectiveList.svelte';
 import type { ObjectiveRow } from '$lib/server/objectives/repository';
@@ -8,9 +9,11 @@ import type { ObjectiveRow } from '$lib/server/objectives/repository';
 /**
  * Component coverage for the calendar objective UI: Spanish labels on the
  * create form, the objective item (kind chips, derived status cue, edit/toggle/
- * delete actions) and the list sections (upcoming/overdue/all split in memory).
- * Mirrors the TaskForm/TaskItem/TaskList component tests (@testing-library/
- * svelte, jsdom project).
+ * delete actions), the list sections (upcoming/overdue/all split in memory)
+ * and the read-only month grid (weekday headers, `aria-current="date"` on
+ * today, no `role="grid"`, keyed chips per day, empty month). Mirrors the
+ * TaskForm/TaskItem/TaskList component tests (@testing-library/svelte, jsdom
+ * project).
  */
 
 function objective(partial: Partial<ObjectiveRow> = {}): ObjectiveRow {
@@ -154,5 +157,71 @@ describe('ObjectiveList', () => {
 		expect(screen.getByText('No hay objetivos próximos.')).toBeTruthy();
 		expect(screen.getByText('No hay objetivos vencidos.')).toBeTruthy();
 		expect(screen.getByText('No hay objetivos todavía.')).toBeTruthy();
+	});
+});
+
+describe('ObjectiveGrid', () => {
+	// September 2026: 1st is a Tuesday (offset 1), 30 days. Today falls inside.
+	const month = [
+		objective({ id: 1, title: 'Parcial de álgebra', due_date: '2026-09-25' }),
+		objective({ id: 2, title: 'Entrega TP', kind: 'deadline', due_date: '2026-09-25' }),
+		objective({ id: 3, title: 'Trámite', kind: 'other', due_date: '2026-09-10' })
+	];
+
+	function cellForDay(day: string): HTMLElement | null {
+		const time = document.querySelector(`time[datetime="${day}"]`);
+		return time?.closest('.grid-cell') ?? null;
+	}
+
+	it('renders the Monday-first weekday header row', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09' }
+		});
+		const headers = Array.from(document.querySelectorAll('.grid-weekday')).map(
+			(el) => el.textContent
+		);
+		expect(headers).toEqual(['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom']);
+	});
+
+	it('marks only today with aria-current="date"', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09' }
+		});
+		const current = document.querySelectorAll('[aria-current="date"]');
+		expect(current.length).toBe(1);
+		expect(current[0]?.querySelector('time')?.getAttribute('datetime')).toBe('2026-09-22');
+	});
+
+	it('renders a semantic display grid, never role="grid" or gridcell', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09' }
+		});
+		expect(document.querySelector('[role="grid"]')).toBeNull();
+		expect(document.querySelector('[role="gridcell"]')).toBeNull();
+		expect(document.querySelectorAll('.month-grid time.day-number').length).toBe(30);
+	});
+
+	it('renders keyed chips per day with kind and title', () => {
+		render(ObjectiveGrid, {
+			props: { month, today: '2026-09-22', monthKey: '2026-09' }
+		});
+		const sameDay = cellForDay('2026-09-25');
+		const otherDay = cellForDay('2026-09-10');
+		expect(sameDay?.querySelectorAll('.chip').length).toBe(2);
+		expect(otherDay?.querySelectorAll('.chip').length).toBe(1);
+		expect(within(sameDay as HTMLElement).getByText('Parcial de álgebra')).toBeTruthy();
+		expect(within(sameDay as HTMLElement).getByText('Entrega TP')).toBeTruthy();
+		expect(within(sameDay as HTMLElement).getByText('Examen')).toBeTruthy();
+		expect(within(sameDay as HTMLElement).getByText('Vencimiento')).toBeTruthy();
+		expect(within(otherDay as HTMLElement).getByText('Trámite')).toBeTruthy();
+	});
+
+	it('shows a clear empty state and empty day cells when the month has no objectives', () => {
+		render(ObjectiveGrid, {
+			props: { month: [], today: '2026-09-22', monthKey: '2026-09' }
+		});
+		expect(screen.getByText('No hay objetivos este mes.')).toBeTruthy();
+		expect(document.querySelectorAll('.month-grid .grid-cell:not(.blank)').length).toBe(30);
+		expect(document.querySelectorAll('.month-grid .chip').length).toBe(0);
 	});
 });
