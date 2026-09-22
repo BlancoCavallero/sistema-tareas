@@ -10,7 +10,7 @@ Current state: CI/CD foundation — SvelteKit skeleton with Spanish UI, real CI 
 - `@sveltejs/adapter-cloudflare` (build output: `.svelte-kit/cloudflare`)
 - Vitest + `@testing-library/svelte` (jsdom)
 - ESLint + Prettier
-- `wrangler@3` pinned (the `wrangler pages deploy` command is deprecated in v4)
+- `wrangler@4` pinned (`wrangler pages deploy` is the current Pages deploy command)
 - Hosting: Cloudflare Pages (free tier), deploy on merge to `main`
 
 ## Prerequisites
