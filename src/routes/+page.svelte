@@ -1,12 +1,15 @@
 <script lang="ts">
-	import TaskList from '$lib/components/TaskList.svelte';
+	import { resolve } from '$app/paths';
 
-	let { data, form } = $props();
+	const tareasHref = resolve('/tareas');
 </script>
 
 <svelte:head>
-	<title>Tareas — Sistema de Tareas</title>
+	<title>Inicio — Sistema de Tareas</title>
 </svelte:head>
 
-<h1>Tareas</h1>
-<TaskList tasks={data.tasks} history={data.history} {form} />
+<h1>Inicio</h1>
+<p>
+	Bienvenido a Estudia. Tus tareas están en
+	<a href={tareasHref}>Tareas</a>.
+</p>
