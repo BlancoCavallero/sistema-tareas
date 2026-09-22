@@ -1,7 +1,15 @@
 {
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "sistema-tareas",
-	"compatibility_date": "2026-09-21",
+	"compatibility_date": "2025-07-18",
 	"compatibility_flags": ["nodejs_als"],
-	"pages_build_output_dir": ".svelte-kit/cloudflare"
+	"pages_build_output_dir": ".svelte-kit/cloudflare",
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "sistema-tareas",
+			"database_id": "1a95fd38-a75d-4508-8c7e-ee2d90bdf243",
+			"migrations_dir": "migrations"
+		}
+	]
 }
