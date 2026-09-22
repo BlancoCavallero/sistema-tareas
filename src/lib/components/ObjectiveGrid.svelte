@@ -1,10 +1,12 @@
 <script lang="ts">
-	import { monthGridDates } from '$lib/domain/objectives';
+	import { deriveStatus, monthGridDates } from '$lib/domain/objectives';
+	import type { ObjectiveStatus } from '$lib/domain/objectives';
 	import type { ObjectiveRow } from '$lib/server/objectives/repository';
 	import { KIND_LABELS } from './ObjectiveItem.svelte';
 
 	/**
-	 * Read-only month grid for `/calendar` (design: "semantic display grid").
+	 * Read-only month grid for `/calendar` and the dashboard mini calendar
+	 * (design: "semantic display grid").
 	 *
 	 * This is a VISUALIZATION, not an interactive widget: dates are chosen with
 	 * `<input type="date">` in the form, so there is deliberately NO
@@ -20,9 +22,26 @@
 	 * grid shows leading blanks + days only (design open question resolved in
 	 * apply). Day numbers use `<time datetime="YYYY-MM-DD">`, and today's cell
 	 * carries `aria-current="date"` (research L1-7, exactly one element).
+	 *
+	 * `compact` (design D5) renders the smaller dashboard variant used by
+	 * MiniCalendarCard: tighter cells, the kind label hidden (chip color still
+	 * distinguishes the kind) and each chip carrying a visually-hidden status
+	 * ("Próxima"/"Vencida"/"Completada") so status never depends on color
+	 * alone (design D9).
 	 */
-	let { month, today, monthKey }: { month: ObjectiveRow[]; today: string; monthKey: string } =
-		$props();
+	let {
+		month,
+		today,
+		monthKey,
+		compact = false
+	}: { month: ObjectiveRow[]; today: string; monthKey: string; compact?: boolean } = $props();
+
+	/** Spanish status labels for the visually-hidden compact chip status. */
+	const STATUS_LABELS: Record<ObjectiveStatus, string> = {
+		upcoming: 'Próxima',
+		overdue: 'Vencida',
+		done: 'Completada'
+	};
 
 	/** Monday-first weekday headers, matching the ISO offset of `monthGridDates`. */
 	const WEEKDAYS = ['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'];
@@ -49,7 +68,7 @@
 	<p class="month-empty">No hay objetivos este mes.</p>
 {/if}
 
-<div class="month-grid">
+<div class="month-grid" class:compact>
 	{#each WEEKDAYS as weekday (weekday)}
 		<span class="grid-weekday">{weekday}</span>
 	{/each}
@@ -70,6 +89,11 @@
 					<ul class="chips">
 						{#each dayObjectives as objective (objective.id)}
 							<li class="chip chip-{objective.kind}">
+								{#if compact}
+									<span class="sr-only">
+										{STATUS_LABELS[deriveStatus(objective.due_date, objective.done, today)]}
+									</span>
+								{/if}
 								<span class="chip-kind">{KIND_LABELS[objective.kind]}</span>
 								<span class="chip-title">{objective.title}</span>
 							</li>
@@ -166,6 +190,45 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+	}
+
+	/* Visually hidden but available to assistive tech (compact chip status). */
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	/* Compact mode (dashboard mini calendar, design D5): tighter cells and
+	   chips; the kind label hides (chip color still distinguishes the kind),
+	   the title stays, and status is conveyed by the visually-hidden span. */
+	.month-grid.compact {
+		gap: 0.125rem;
+	}
+	.compact .grid-weekday {
+		font-size: 0.7rem;
+		padding: 0.125rem 0;
+	}
+	.compact .grid-cell {
+		min-height: 2.5rem;
+		padding: 0.125rem;
+	}
+	.compact .day-number {
+		font-size: 0.75rem;
+	}
+	.compact .chip {
+		padding: 0 0.3rem;
+		font-size: 0.75rem;
+		gap: 0.25rem;
+	}
+	.compact .chip-kind {
+		display: none;
 	}
 
 	/* Narrow screens: cells and chips compact instead of breaking the grid

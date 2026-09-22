@@ -37,6 +37,15 @@
 	--color-overdue-bg: #ffebe9;
 	--color-overdue-text: #b00020;
 
+	/* Subject tint pairs (additive, design D7): amber and violet are new; blue
+	   reuses --color-accent-soft. Each text color meets WCAG AA (>= 4.5:1) on
+	   its soft background — measured ratios are recorded in apply-progress
+	   evidence (task 4.3). */
+	--color-amber: #9a6700;
+	--color-amber-soft: #fff8c5;
+	--color-violet: #8250df;
+	--color-violet-soft: #fbefff;
+
 	/* Interaction states */
 	--color-hover-bg: #eaeef2;
 	--color-active-bg: #dfe3e8;
@@ -97,6 +106,11 @@
 		--color-danger: #ff7b72;
 		--color-overdue-bg: #3d1418;
 		--color-overdue-text: #ff7b72;
+
+		--color-amber: #d29922;
+		--color-amber-soft: #3d2f00;
+		--color-violet: #a371f7;
+		--color-violet-soft: #271052;
 
 		--color-hover-bg: #21262d;
 		--color-active-bg: #30363d;
