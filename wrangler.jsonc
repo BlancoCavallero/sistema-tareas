@@ -8,10 +8,7 @@
 		{
 			"binding": "DB",
 			"database_name": "sistema-tareas",
-			// TODO: replace with the provisioned database id before any remote
-			// deploy: `wrangler d1 create sistema-tareas`, then paste the UUID.
-			// Local dev and tests work with the placeholder.
-			"database_id": "00000000-0000-0000-0000-000000000000",
+			"database_id": "1a95fd38-a75d-4508-8c7e-ee2d90bdf243",
 			"migrations_dir": "migrations"
 		}
 	]
