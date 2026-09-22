@@ -245,10 +245,7 @@ describe('bounded reads and materialization', () => {
 				recurrence_mode: '.+'
 			})
 		);
-		const oneOff = await createTask(
-			db,
-			taskInput({ title: 'Suelta', next_due: '2026-09-01' })
-		);
+		const oneOff = await createTask(db, taskInput({ title: 'Suelta', next_due: '2026-09-01' }));
 		const tasks = await listTasks(db);
 		expect(await materializeStale(db, tasks, '2026-09-23')).toBe(0);
 		expect((await getTask(db, relative.id))?.next_due).toBe('2026-09-01');

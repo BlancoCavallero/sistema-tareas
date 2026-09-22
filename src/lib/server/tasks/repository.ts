@@ -10,7 +10,14 @@
  * - completeTask: SELECT + INSERT (idempotent via the UNIQUE constraint) +
  *   UPDATE next_due = 3 queries.
  */
-import { advance, materialize, toRecurrenceRule, today, type RecurrenceMode, type RecurrenceType } from '$lib/domain/recurrence';
+import {
+	advance,
+	materialize,
+	toRecurrenceRule,
+	today,
+	type RecurrenceMode,
+	type RecurrenceType
+} from '$lib/domain/recurrence';
 
 export const LIST_LIMIT = 25;
 
@@ -96,7 +103,10 @@ function rowToTaskWithDone(row: Record<string, unknown>): TaskWithDone {
  * Bounded page of tasks with the `done` flag derived from the completions log
  * (single LEFT JOIN, no N+1), ordered by next occurrence.
  */
-export async function listTasks(store: D1TaskStore, limit: number = LIST_LIMIT): Promise<TaskWithDone[]> {
+export async function listTasks(
+	store: D1TaskStore,
+	limit: number = LIST_LIMIT
+): Promise<TaskWithDone[]> {
 	const { results } = await store
 		.prepare(
 			`SELECT t.*, tc.occurrence_date IS NOT NULL AS done
@@ -247,7 +257,10 @@ export async function history(store: D1TaskStore, taskId: number): Promise<Compl
  * Completion log for a whole page of tasks — ONE query with an IN clause
  * (bounded by the page limit), never one query per task.
  */
-export async function historyForTasks(store: D1TaskStore, taskIds: number[]): Promise<CompletionRow[]> {
+export async function historyForTasks(
+	store: D1TaskStore,
+	taskIds: number[]
+): Promise<CompletionRow[]> {
 	if (taskIds.length === 0) return [];
 	const placeholders = taskIds.map(() => '?').join(', ');
 	const { results } = await store
