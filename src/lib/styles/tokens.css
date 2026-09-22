@@ -1,0 +1,175 @@
+/**
+ * Global design tokens — the single canonical token source for the app.
+ * Imported exactly once from src/routes/+layout.svelte.
+ *
+ * Contract:
+ * - Only semantic, role-named custom properties live here. Components consume
+ *   them via var(--token) and never redeclare the global set.
+ * - Light values are declared on :root; dark mode overrides the SAME names
+ *   inside @media (prefers-color-scheme: dark), so components never branch on
+ *   the color scheme.
+ * - var() is never used inside a media query condition (it cannot be). Fluid
+ *   scales use clamp() instead, and breakpoint-specific values override the
+ *   token inside the media query.
+ *
+ * Contrast: WCAG AA verified — body text >= 4.5:1, large text / UI components /
+ * focus indicator >= 3:1. Measured ratios are recorded in the apply-progress
+ * evidence for this change.
+ */
+
+:root {
+	/* Native UI theming (scrollbars, form controls, canvas) + no white flash. */
+	color-scheme: light dark;
+
+	/* Surfaces & text */
+	--color-bg: #ffffff;
+	--color-surface: #f6f8fa;
+	--color-border: #d0d7de; /* decorative separator, exempt from 1.4.11 */
+	--color-border-strong: #878f9a; /* essential UI boundary, >= 3:1 */
+	--color-text: #1f2328;
+	--color-text-secondary: #57606a;
+
+	/* Brand & status */
+	--color-accent: #0969da;
+	--color-accent-soft: #ddf4ff;
+	--color-success: #1a7f37;
+	--color-danger: #b00020;
+	--color-overdue-bg: #ffebe9;
+	--color-overdue-text: #b00020;
+
+	/* Interaction states */
+	--color-hover-bg: #eaeef2;
+	--color-active-bg: #dfe3e8;
+	--color-disabled-bg: #eaeef2;
+	--color-disabled-text: #8c959f;
+	--focus-ring-color: var(--color-accent);
+
+	/* Focus indicator (>= 3:1 against adjacent colors) */
+	--focus-ring-width: 2px;
+	--focus-ring-offset: 2px;
+	--focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+
+	/* Radius */
+	--radius-sm: 0.25rem;
+	--radius-md: 0.5rem;
+	--radius-full: 999px;
+
+	/* Motion (interaction durations stay <= 300ms) */
+	--duration-fast: 100ms;
+	--duration-base: 200ms;
+	--duration-slow: 300ms;
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+	/* Fluid type scale. Utopia config: 320px -> 1240px viewport, 16px -> 18px
+	   base, 1.2 -> 1.25 ratio. Values are precalculated clamp() pairs. */
+	--text-sm: clamp(0.8333rem, 0.8101rem + 0.1159vw, 0.9rem);
+	--text-base: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem);
+	--text-lg: clamp(1.2rem, 1.1283rem + 0.3587vw, 1.4063rem);
+	--text-xl: clamp(1.44rem, 1.3295rem + 0.5527vw, 1.7578rem);
+	--text-2xl: clamp(1.728rem, 1.5648rem + 0.8161vw, 2.1973rem);
+
+	/* Spacing scale on a 4px grid. Small steps are fixed (sub-pixel fluid
+	   clamps add no value); large steps are fluid so dense layouts breathe on
+	   wide screens. Utopia viewport/base matches the type scale above. */
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-5: 1.25rem;
+	--space-6: clamp(1.5rem, 1.4348rem + 0.3261vw, 1.6875rem);
+	--space-8: clamp(2rem, 1.913rem + 0.4348vw, 2.25rem);
+	--space-12: clamp(3rem, 2.8696rem + 0.6522vw, 3.375rem);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root {
+		/* Same token names, dark values only. Deep grays, never pure black. */
+		--color-bg: #0d1117;
+		--color-surface: #161b22;
+		--color-border: #30363d; /* decorative separator, exempt from 1.4.11 */
+		--color-border-strong: #6e7681; /* essential UI boundary, >= 3:1 */
+		--color-text: #e6edf3;
+		--color-text-secondary: #8b949e;
+
+		--color-accent: #58a6ff;
+		--color-accent-soft: #12324a;
+		--color-success: #3fb950;
+		--color-danger: #ff7b72;
+		--color-overdue-bg: #3d1418;
+		--color-overdue-text: #ff7b72;
+
+		--color-hover-bg: #21262d;
+		--color-active-bg: #30363d;
+		--color-disabled-bg: #21262d;
+		--color-disabled-text: #6e7681;
+	}
+}
+
+/* Minimal reset: box sizing, body margins, and base typography from tokens.
+   Kept deliberately small so untouched components keep their current look. */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	-webkit-text-size-adjust: 100%;
+}
+
+body {
+	margin: 0;
+	font-family:
+		system-ui,
+		-apple-system,
+		'Segoe UI',
+		Roboto,
+		Helvetica,
+		Arial,
+		sans-serif;
+	font-size: var(--text-base);
+	line-height: 1.5;
+	color: var(--color-text);
+	background-color: var(--color-bg);
+}
+
+button,
+input,
+select,
+textarea {
+	font: inherit;
+	color: inherit;
+}
+
+/* Focus indicator. :focus-visible keeps the ring off pointer interaction. */
+:focus-visible {
+	outline: var(--focus-ring);
+	outline-offset: var(--focus-ring-offset);
+}
+
+/* Legacy fallback: browsers without :focus-visible cannot suppress the ring on
+   pointer interaction, so fall back to showing it on every focus. */
+@supports not selector(:focus-visible) {
+	:focus {
+		outline: var(--focus-ring);
+		outline-offset: var(--focus-ring-offset);
+	}
+}
+
+/* Reduced motion: disable non-essential transitions and animations. */
+@media (prefers-reduced-motion: reduce) {
+	:root {
+		--duration-fast: 0ms;
+		--duration-base: 0ms;
+		--duration-slow: 0ms;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+		scroll-behavior: auto !important;
+	}
+}

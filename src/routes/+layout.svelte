@@ -2,6 +2,8 @@
 	import { page } from '$app/state';
 	import { resolve } from '$app/paths';
 	import favicon from '$lib/assets/favicon.svg';
+	// Global design tokens — loaded exactly once from the root layout.
+	import '$lib/styles/tokens.css';
 
 	let { children } = $props();
 
