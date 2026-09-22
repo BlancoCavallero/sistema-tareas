@@ -16,8 +16,23 @@ export default defineConfig({
 		svelteTesting()
 	],
 	test: {
-		environment: 'jsdom',
-		expect: { requireAssertions: true },
-		include: ['src/**/*.{test,spec}.{js,ts}']
+		projects: [
+			{
+				// Unit + component tests: jsdom (WebCrypto polyfilled via setup file).
+				// `extends: true` inherits the root sveltekit + svelteTesting plugins
+				// (required for compiling .svelte components). Default only in Vitest 5.
+				extends: true,
+				test: {
+					name: 'unit',
+					environment: 'jsdom',
+					expect: { requireAssertions: true },
+					include: ['src/**/*.{test,spec}.{js,ts}'],
+					exclude: ['**/node_modules/**', 'src/**/*.workers.test.ts'],
+					setupFiles: ['./src/test/setup-jsdom.ts']
+				}
+			},
+			// D1 integration tests: @cloudflare/vitest-pool-workers (workerd).
+			'./vitest.workers.config.ts'
+		]
 	}
 });

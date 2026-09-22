@@ -17,6 +17,7 @@
 		"gen": "wrangler types"
 	},
 	"devDependencies": {
+		"@cloudflare/vitest-pool-workers": "^0.22.0",
 		"@eslint/js": "^10.0.1",
 		"@sveltejs/adapter-cloudflare": "^6.0.1",
 		"@sveltejs/kit": "^2.63.0",
@@ -42,6 +43,8 @@
 		"workerd@1.20250718.0": true,
 		"esbuild@0.24.2": true,
 		"esbuild@0.28.1": true,
-		"esbuild@0.17.19": true
+		"esbuild@0.17.19": true,
+		"workerd@1.20260815.1": true,
+		"sharp@0.33.5": true
 	}
 }
